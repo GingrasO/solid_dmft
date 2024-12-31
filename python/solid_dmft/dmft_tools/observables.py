@@ -85,6 +85,8 @@ def prep_observables(h5_archive, sum_k, ghostGA=False):
                                       for _ in range(n_inequiv_shells)]
             observables['Lambda'] = [{spin: [] for spin in sum_k.spin_block_names[sum_k.SO]}
                                       for _ in range(n_inequiv_shells)]
+            observables['eloc_orig'] = [{spin: [] for spin in sum_k.spin_block_names[sum_k.SO]}
+                                      for _ in range(n_inequiv_shells)]
         observables['orb_occ'] = [{spin: [] for spin in sum_k.spin_block_names[sum_k.SO]}
                                   for _ in range(n_inequiv_shells)]
         observables['orb_Z'] = [{spin: [] for spin in sum_k.spin_block_names[sum_k.SO]}
@@ -398,7 +400,7 @@ def add_dmft_observables(observables, general_params, solver_params, dft_energy,
             # TODO: need to figure out how to compute the dc_energy
             for icrsh in range(sum_k.n_inequiv_shells):
                 observables['E_int'][icrsh].append(shell_multiplicity[icrsh]*E_int[icrsh].real)
-                E_corr_en += shell_multiplicity[icrsh] * (E_int[icrsh].real - sum_k.dc_energ[sum_k.inequiv_to_corr[icrsh]])
+                E_corr_en += shell_multiplicity[icrsh] * (E_int[icrsh].real)# - sum_k.dc_energ[sum_k.inequiv_to_corr[icrsh]])
 
 
     observables['E_corr_en'].append(E_corr_en)
